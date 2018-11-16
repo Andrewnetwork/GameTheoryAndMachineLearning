@@ -1,0 +1,33 @@
+ # Ensure positions are within the area of the board.
+        boardBoundsCond = pos[0] < len(self.state) and pos[1] < len(self.state)
+        
+        # Ensure we are moving diagonally.
+        diagonalCond = None
+        
+        if boardBoundsCond and diagonalCond:
+            # Empty space moves.
+            if self.state[pos[0]] == 0 ^ self.state[pos[1]] == 0:
+                if self.state[pos[0]] != 0:
+                    nonEmptyPiece = (pos[0],self.state[pos[0]])
+                    emptyPiece = pos[1]
+                else:
+                    nonEmptyPiece = (pos[1],self.state[pos[1]])
+                    emptyPiece = pos[0]
+
+                # Make sure we are headed in the right direction. 
+                if nonEmptyPiece < 3:
+                    # Dealing with a man.
+                    if nonEmptyPiece == 1:
+                        # 1's go down.
+                        return nonEmptyPiece[0] < emptyPiece
+                    else:
+                        # 2's go up. 
+                        return nonEmptyPiece[0] > emptyPiece
+                else:
+                    # Dealing with a king. 
+                    pass
+            else:
+                return False
+        else:
+            # One of the positions lies outside the boundary of the board. 
+            return False
